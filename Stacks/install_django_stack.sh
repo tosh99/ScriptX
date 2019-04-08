@@ -5,7 +5,6 @@ sudo -H pip3 install django
 sudo -H pip3 install gunicorn
 pip3 install django-cors-headers
 
-
 echo "Installing Django DB Dependencies ------------------------------"
 pip3 install mysqlclient
 pip3 install psycopg2
