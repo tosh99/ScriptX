@@ -1,2 +1,2 @@
 # ScriptX
-A collection of Unix Scripts for Server Management
+A collection of Common Scripts used for Installations / Setup / Quick Access
