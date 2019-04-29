@@ -1,0 +1,62 @@
+https://stackoverflow.com/questions/1517635/save-pl-pgsql-output-from-postgresql-to-a-csv-file
+https://stackoverflow.com/questions/3002499/postgresql-crosstab-query/11751905#11751905
+https://stackoverflow.com/questions/5108876/kill-a-postgresql-session-connection
+
+psql -U postgres -h 127.0.0.1 -d celgene_mdp_local -c "update mdp_data_extract set is_active = 'N'"
+
+psql -U postgres -h 127.0.0.1 -c "\copy mdp_data_extract(tactic_id, tactic_status,tactic_activation_date, is_active) from 'data.txt' delimiter '|'" celgene_mdp_local
+
+psql -U postgres -h 127.0.0.1 -d celgene_mdp_local -c "update mdp_tactic_exposure_details data_dtl set tactic_activation_date=data_ext.tactic_activation_date , active_status='Y' from mdp_data_extract data_ext where data_dtl.tactic_id=data_ext.tactic_id and data_ext.is_active='Y'"
+
+// Tables present in db
+SELECT table_catalog, table_name
+from information_schema.tables
+where table_schema = 'public' AND TABLE_NAME LIKE '%geo_brand_indication%';
+
+
+//drop queries for functions
+
+SELECT 'DROP FUNCTION ' || ns.nspname || '.' || proname 
+       || '(' || oidvectortypes(proargtypes) || ');'
+FROM pg_proc INNER JOIN pg_namespace ns ON (pg_proc.pronamespace = ns.oid)
+WHERE ns.nspname = 'public'
+order by proname;
+
+
+// List of Functions
+SELECT  proname 
+FROM    pg_catalog.pg_namespace n 
+JOIN    pg_catalog.pg_proc p 
+ON      pronamespace = n.oid 
+WHERE   nspname = 'public';
+
+
+COPY mdp_tactic_exposure_details FROM '/tmp/test.txt' (DELIMITER('|'), NULL 'NA');
+
+pg_dump -U postgres -h 127.0.0.1 -d celgene_mdp_local > celgene_backup.sql
+
+psql -U postgres -h 127.0.0.1 -d celgene_mdp_local < celgene_backup.sql
+
+// Windows Powershell
+cmd /c 'psql -U postgres -h 127.0.0.1 -d celgene_mdp_local < celgene_backup.sql'
+
+
+https://stackoverflow.com/questions/49573258/installing-postgresql-client-v10-on-aws-amazon-linux-ec2-ami
+sudo yum erase postgresqlX.Y
+sudo yum install postgresql10
+
+// password from a .pgpass file
+https://stackoverflow.com/questions/16786011/postgresql-pgpass-not-working
+https://www.postgresql.org/docs/8.3/libpq-pgpass.html
+
+
+\c name_database   //to switch databases
+\dt or SELECT * FROM pg_catalog.pg_tables;             //to list tables in a schema
+
+
+https://stackoverflow.com/questions/18907047/postgres-db-size-command
+
+// Database Size
+SELECT pg_size_pretty(pg_database_size('Database Name'));
+// Table Size
+SELECT pg_size_pretty(pg_relation_size('table_name'));
