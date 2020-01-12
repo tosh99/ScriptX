@@ -14,6 +14,7 @@ sudo apt-get -y install apache2
 sudo apt-get -y install libapache2-mod-wsgi-py3
 
 echo "Installing MySQL -----------------------------------------------"
+sudo apt-get install libssl-dev
 sudo apt-get -y install mysql-server
 sudo apt-get -y install libmysqlclient-dev
 

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 echo "Create Project Directory -------------------"
-mkdir project
+mkdir ~/project
 
 echo "Change Directory to Project"
-cd project
+cd ~/project
 
 echo "Clone Project ------------------------------"
 git clone frontend
